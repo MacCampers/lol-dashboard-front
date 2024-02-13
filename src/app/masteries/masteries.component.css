@@ -1,0 +1,62 @@
+.ordered-list {
+  cursor: pointer;
+}
+
+.not-earn {
+  filter: brightness(1%) opacity(15%);
+  -webkit-filter: brightness(1%) opacity(15%);
+  height: 24px
+}
+
+.earn {
+  height: 24px
+}
+.champion-icon {
+  width: 60px;
+  height: 60px;
+}
+
+.mastery-icon {
+  margin-top: 10px;
+  width: 40px;
+  height: 40px;
+
+}
+
+.small-table {
+  width: 5%;
+}
+
+.profile-icon {
+  width: 80px;
+  height: 80px;
+  border-radius: 20%;
+}
+
+.profile-header {
+  display: flex;
+  justify-content: left;
+  align-items: center;
+  width: 100%;
+}
+
+.profile-container {
+  position: relative;
+  display: inline-block;
+}
+
+.profile-container img {
+  display: block;
+}
+
+.profile-container span {
+  position: absolute;
+  bottom: -10px;
+  left: 42%;
+  font-size: 13px;
+  transform: translateX(-50%);
+  background-color: rgba(0, 0, 0, 0.8);
+  border-radius: 20%;
+  color: white;
+  padding: 2px 5px;
+}

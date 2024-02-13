@@ -1,0 +1,49 @@
+<div class="container">
+  <div class="row">
+    <div class="profile-header">
+      <div class="profile-container">
+        <img class="profile-icon me-3" [src]="'../../assets/profile-icon/' + accountDetails.profileIconId + '.png'" alt="profile-icon">
+        <span>{{accountDetails.summonerLevel}}</span>
+      </div>
+      <h1>{{gameName}}#{{tagLine}}</h1>
+    </div>
+    <table class="table table-responsive">
+      <thead>
+      <tr>
+        <th scope="col" class="small-table"></th>
+        <th scope="col"></th>
+        <th scope="col" class="ordered-list" (click)="sortChampionMasteries('name')">Champion <span class="glyphicon glyphicon-triangle-bottom"></span></th>
+        <th scope="col" class="ordered-list" (click)="sortChampionMasteries('championLevel')">Level</th>
+        <th scope="col" class="ordered-list" (click)="sortChampionMasteries('championPoints')">Mastery Points</th>
+        <th scope="col" class="small-table">Chest</th>
+        <th scope="col" class="ordered-list" (click)="sortChampionMasteries('championPointsUntilNextLevel')">Progress</th>
+        <th scope="col" class="ordered-list" (click)="sortChampionMasteries('lastPlayTime')">Last Played</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let cm of championMasteries">
+        <th><img [src]="'../../assets/masteries/' + cm.championLevel + '.png'" [alt]=" cm.championLevel" class="mastery-icon"></th>
+        <th><img [src]="'../../assets/champion/' + cm.image" [alt]="cm.name" class="champion-icon"></th>
+        <th>{{cm.name}}</th>
+        <td>{{ cm.championLevel }}</td>
+        <td>{{ cm.championPoints }}</td>
+        <td><img [src]="'assets/chest.png'" [class]="cm.chestGranted ? 'earn' : 'not-earn'" alt="chest"></td>
+        <td *ngIf="cm.championLevel == 7">Mastered</td>
+        <ng-container *ngIf="cm.championLevel < 7">
+          <td *ngIf="cm.championLevel >= 5">
+            <img *ngFor="let i of getMasteryTokens(cm.championLevel)" src="assets/masteries/7.png" [class]="cm.tokensEarned >= i ? 'earn' : 'not-earn'" alt="mastery">
+          </td>
+          <td *ngIf="cm.championLevel < 5">
+            <div class="progress">
+              <div class="progress-bar" role="progressbar" [style.width.%]="getProgressWidth(cm)"></div>
+            </div>
+            {{ cm.championPointsUntilNextLevel }}
+          </td>
+        </ng-container>
+        <td>{{ cm.lastPlayTime | date }}</td>
+      </tr>
+      </tbody>
+    </table>
+
+  </div>
+</div>

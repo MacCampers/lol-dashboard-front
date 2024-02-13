@@ -1,0 +1,29 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light static-top mb-5 shadow">
+  <div class="container">
+    <a class="navbar-brand" href="#">LoL Dashboard</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarResponsive">
+      <ul class="navbar-nav ms-auto">
+       <!-- <li class="nav-item active">
+          <a class="nav-link" href="#">Home</a>
+        </li>-->
+        <li class="nav-item">
+          <div class="input-group">
+            <input type="text" class="form-control input-large" placeholder="name"  [(ngModel)]="gameName">
+            <span class="input-group-text">#</span>
+            <input type="text" class="form-control input-small" placeholder="tag"  [(ngModel)]="tagLine">
+            <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">EUW</button>
+            <div class="dropdown-menu">
+              <a class="dropdown-item">EUW</a>
+              <a class="dropdown-item">NA</a>
+              <a class="dropdown-item">KR</a>
+            </div>
+            <button class="btn btn-primary" type="submit" (click)="submit()">Submit</button>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>

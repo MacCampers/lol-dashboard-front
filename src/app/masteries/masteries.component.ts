@@ -1,7 +1,7 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
 import {HttpClientService} from "../services/http-client-service.service";
-import {switchMap} from "rxjs";
+import {Subscription, switchMap} from "rxjs";
 import {ChampionMasteryDTO} from "../model/ChampionMasteryDTO";
 import {DatePipe, NgForOf, NgIf, NgSwitch, NgSwitchCase, NgSwitchDefault} from "@angular/common";
 import {ChampionService} from "../services/champion.service";
@@ -22,8 +22,8 @@ import {SummonerDTO} from "../model/SummonerDTO";
   templateUrl: './masteries.component.html',
   styleUrl: './masteries.component.css'
 })
-export class MasteriesComponent implements OnInit {
-
+export class MasteriesComponent implements OnInit, OnDestroy {
+  private subscriptions = new Subscription();
   gameName?: string | null
   tagLine?: string | null
   puuid?: string | null
@@ -39,15 +39,21 @@ export class MasteriesComponent implements OnInit {
               private championService: ChampionService) {}
 
   ngOnInit() {
-    this.loadAccountInformations()
-    this.loadAccountDetails()
-    this.loadMasteries()
+    this.subscribeToAccountInformationChanges();
+    this.loadMasteries();
   }
 
-  loadAccountInformations() {
-    this.gameName = this.globalService.getAccountInformation().gameName
-    this.tagLine = this.globalService.getAccountInformation().tagLine
-    this.puuid = this.globalService.getAccountInformation().puuid
+  private subscribeToAccountInformationChanges() {
+    const accountInfoSubscription = this.globalService.accountInformation$.subscribe(info => {
+      if (info) {
+        this.gameName = info.gameName;
+        this.tagLine = info.tagLine;
+        this.puuid = info.puuid;
+        this.loadAccountDetails();
+        this.loadMasteries();
+      }
+    });
+    this.subscriptions.add(accountInfoSubscription);
   }
 
   private loadAccountDetails() {
@@ -134,5 +140,9 @@ export class MasteriesComponent implements OnInit {
       return this.masteryTokenFive;
     }
     return [];
+  }
+
+  ngOnDestroy() {
+    this.subscriptions.unsubscribe();
   }
 }
